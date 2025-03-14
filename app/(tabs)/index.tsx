@@ -21,6 +21,8 @@ export default function Index() {
       <SearchBar
         onPress={() => router.push("/search")}
         placeholder="Search for a movie"
+        value=""
+        onChangeText={() => {}}
       />
       <Text className="text-lg text-white font-bold mt-5 mb-5">
         Latest Movies
@@ -46,25 +48,28 @@ export default function Index() {
 
   return (
     <View className="flex-1 bg-primary">
-      <Image source={images.bg} className="absolute w-full z-0" />
-      <View className="flex-1 px-5">
-        <FlatList
-          data={movies}
-          ListHeaderComponent={ListHeader}
-          renderItem={({ item }) => <MovieCard item={item} />}
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
-          columnWrapperStyle={{
-            justifyContent: "flex-start",
-            gap: 20,
-            paddingRight: 5,
-            marginBottom: 20,
-          }}
-          // scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ minHeight: "100%", paddingBottom: 75 }}
-        />
-      </View>
+      <Image
+        source={images.bg}
+        className="absolute w-full z-0"
+        resizeMode="cover"
+      />
+      <FlatList
+        className="px-5"
+        data={movies}
+        ListHeaderComponent={ListHeader}
+        renderItem={({ item }) => <MovieCard item={item} />}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={3}
+        columnWrapperStyle={{
+          justifyContent: "flex-start",
+          gap: 20,
+          paddingRight: 5,
+          marginBottom: 20,
+        }}
+        // scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 75 }}
+      />
     </View>
   );
 }
