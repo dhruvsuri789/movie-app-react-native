@@ -4,31 +4,40 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
 import { updateSearchCount } from "@/services/appwrite";
-import useFetch from "@/services/useFetch";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const {
+  /* const {
     data: movies,
     loading,
     error,
     refetch: loadMovies,
     reset: resetMovies,
-  } = useFetch(() => fetchMovies({ query: searchQuery }), false);
+  } = useFetch(() => fetchMovies({ query: searchQuery }), false); */
+
+  const {
+    isPending,
+    error,
+    data: movies,
+    refetch: refetchMovies,
+  } = useQuery({
+    queryKey: ["searchData"],
+    queryFn: async () => {
+      const moviesData = await fetchMovies<Movie[]>({ query: searchQuery });
+      if (moviesData?.length > 0) updateSearchCount(searchQuery, moviesData[0]);
+      console.log("moviesData", searchQuery, moviesData[0]);
+      return moviesData;
+    },
+  });
 
   useEffect(() => {
     const timeoutId = setTimeout(async () => {
-      if (searchQuery.trim()) {
-        const searchResults = await loadMovies();
-
-        // track the searches made by a user
-        if (searchResults?.length > 0)
-          await updateSearchCount(searchQuery, searchResults[0]);
-      } else {
-        resetMovies();
+      if (searchQuery.length > 2) {
+        refetchMovies();
       }
     }, 500);
 
@@ -58,7 +67,7 @@ const Search = () => {
               />
             </View>
 
-            {loading && (
+            {isPending && (
               <ActivityIndicator
                 size="large"
                 color="#0000ff"
@@ -72,16 +81,19 @@ const Search = () => {
               </Text>
             )}
 
-            {!loading && !error && searchQuery.trim() && movies?.length > 0 && (
-              <Text className="text-xl text-white font-bold mb-5">
-                Search Results for{" "}
-                <Text className="text-accent">{searchQuery}</Text>
-              </Text>
-            )}
+            {!isPending &&
+              !error &&
+              searchQuery.trim() &&
+              movies?.length > 0 && (
+                <Text className="text-xl text-white font-bold mb-5">
+                  Search Results for{" "}
+                  <Text className="text-accent">{searchQuery}</Text>
+                </Text>
+              )}
           </>
         }
         ListEmptyComponent={
-          !loading && !error ? (
+          !isPending && !error ? (
             <View className="mt-10 px-5">
               <Text className="text-gray-500 text-center">
                 {searchQuery.trim() ? "No movies found" : "Search for a movie"}

@@ -3,17 +3,21 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
-import useFetch from "@/services/useFetch";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+
   const {
-    data: movies,
-    loading: moviesLoading,
+    isPending: moviesLoading,
     error: moviesError,
-  } = useFetch(() => fetchMovies({ query: "" }));
+    data: movies,
+  } = useQuery({
+    queryKey: ["homeData"],
+    queryFn: () => fetchMovies<Movie[]>({ query: "" }),
+  });
 
   if (moviesLoading) {
     return (
