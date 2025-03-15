@@ -15,21 +15,6 @@ export default function Index() {
     error: moviesError,
   } = useFetch(() => fetchMovies({ query: "" }));
 
-  const ListHeader = () => (
-    <>
-      <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-      <SearchBar
-        onPress={() => router.push("/search")}
-        placeholder="Search for a movie"
-        value=""
-        onChangeText={() => {}}
-      />
-      <Text className="text-lg text-white font-bold mt-5 mb-5">
-        Latest Movies
-      </Text>
-    </>
-  );
-
   if (moviesLoading) {
     return (
       <View className="flex-1 bg-primary justify-center items-center">
@@ -56,7 +41,23 @@ export default function Index() {
       <FlatList
         className="px-5"
         data={movies}
-        ListHeaderComponent={ListHeader}
+        ListHeaderComponent={
+          <>
+            <Image
+              source={icons.logo}
+              className="w-12 h-10 mt-20 mb-5 mx-auto"
+            />
+            <SearchBar
+              onPress={() => router.push("/search")}
+              placeholder="Search for a movie"
+              value=""
+              onChangeText={() => {}}
+            />
+            <Text className="text-lg text-white font-bold mt-5 mb-5">
+              Latest Movies
+            </Text>
+          </>
+        }
         renderItem={({ item }) => <MovieCard item={item} />}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
