@@ -69,7 +69,7 @@ export default function Index() {
         }}
         // scrollEnabled={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ minHeight: "100%", paddingBottom: 75 }}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 100 }}
       />
     </View>
   );

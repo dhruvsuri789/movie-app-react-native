@@ -3,6 +3,7 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
+import { updateSearchCount } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
@@ -21,7 +22,11 @@ const Search = () => {
   useEffect(() => {
     const timeoutId = setTimeout(async () => {
       if (searchQuery.trim()) {
-        await loadMovies();
+        const searchResults = await loadMovies();
+
+        // track the searches made by a user
+        if (searchResults?.length > 0)
+          await updateSearchCount(searchQuery, searchResults[0]);
       } else {
         resetMovies();
       }
@@ -106,12 +111,15 @@ When you create separate components outside, they can cause unnecessary re-rende
 
 Here's a summary of why this works better:
 
+
 Inline Components:
 
 Stay within the same render cycle
 Share the same scope as parent component
 Don't trigger separate re-renders
 Maintain keyboard focus better
+
+
 Separate Components:
 
 Create new component instances
