@@ -1,0 +1,1 @@
+ALTER TABLE "metrics_table" ADD CONSTRAINT "metrics_table_search_term_unique" UNIQUE("search_term");

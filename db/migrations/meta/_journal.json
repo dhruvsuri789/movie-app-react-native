@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1742049463425,
+      "tag": "0000_illegal_captain_america",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742050164727,
+      "tag": "0001_lame_franklin_storm",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742050249238,
+      "tag": "0002_green_randall_flagg",
+      "breakpoints": true
+    }
+  ]
+}

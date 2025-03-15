@@ -1,0 +1,1 @@
+ALTER TABLE "metrics_table" ALTER COLUMN "count" SET NOT NULL;
