@@ -38,7 +38,7 @@ const Search = () => {
       if (searchQuery.length > 2) {
         refetchMovies();
       }
-    }, 500);
+    }, 700);
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);

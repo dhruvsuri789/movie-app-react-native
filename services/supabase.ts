@@ -8,6 +8,8 @@ const supabaseAnonKey = process.env.EXPO_PUBLIC_REACT_NATIVE_SUPABASE_ANON_KEY!;
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 export const updateMetricCount = async (query: string, movie: Movie) => {
+  if (!query) return;
+
   // check if a record of that search has already been stored
   const { data: metric } = await supabase
     .from("metrics")
