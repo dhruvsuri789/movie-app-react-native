@@ -3,7 +3,7 @@ import SearchBar from "@/components/SearchBar";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import { fetchMovies } from "@/services/api";
-import { updateSearchCount } from "@/services/appwrite";
+import { updateMetricCount } from "@/services/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
@@ -28,8 +28,7 @@ const Search = () => {
     queryKey: ["searchData"],
     queryFn: async () => {
       const moviesData = await fetchMovies<Movie[]>({ query: searchQuery });
-      if (moviesData?.length > 0) updateSearchCount(searchQuery, moviesData[0]);
-      console.log("moviesData", searchQuery, moviesData[0]);
+      if (moviesData?.length > 0) updateMetricCount(searchQuery, moviesData[0]);
       return moviesData;
     },
   });
