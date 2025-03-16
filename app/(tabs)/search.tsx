@@ -104,7 +104,7 @@ const Search = () => {
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
         columnWrapperStyle={{
-          justifyContent: "center",
+          justifyContent: "flex-start",
           gap: 16,
           marginVertical: 16,
         }}

@@ -4,8 +4,8 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 interface Props {
   placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
   onPress?: () => void;
 }
 
