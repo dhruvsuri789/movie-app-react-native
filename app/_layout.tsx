@@ -10,6 +10,7 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <>
+        {/* Hides status bar for full app */}
         <StatusBar hidden={true} />
         <Stack>
           {/* Hides routes group (tabs) header */}
